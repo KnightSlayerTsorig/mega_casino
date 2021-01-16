@@ -56,6 +56,6 @@ sobaka.game_machine_add_money(2000, -3)
 sobaka.game_machine_add_money(2000, 3)
 # Спроба 'SuperAdmin' видалити 'GameMachine' з індексом 0 з власного 'casino'
 sobaka.remove_game_machine(0)
-# Спроба 'SuperAdmin' видалити 'GameMachine' з індексом 1(неіснуючу) з власного 'casino'
+# Спроба 'SuperAdmin' видалити 'GameMachine' з індексом 1(не існуючу) з власного 'casino'
 sobaka.remove_game_machine(1)
 
