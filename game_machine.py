@@ -37,13 +37,14 @@ class GameMachine:
         else:
             self.money = self.money + user_money
             new_numbers = [randint(0, 9), randint(0, 9), randint(0, 9)]
+            new_numbers_concat = ''.join([str(elem) for elem in new_numbers])
             counter = 0
             same_numbers = 0
             while counter < len(new_numbers) - 1:
                 if new_numbers[counter] == new_numbers[counter + 1] or new_numbers[counter] == new_numbers[counter - 1]:
                     same_numbers += 1
                 counter += 1
-            print(new_numbers)
+            print(new_numbers_concat)
             print(same_numbers)
             if same_numbers == 0:
                 print('Sorry you loose :(')
