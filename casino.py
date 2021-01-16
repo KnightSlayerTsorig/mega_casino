@@ -87,7 +87,6 @@ class Casino:
                 for el in self.game_machines_money:
                     el += money_from_game_machine
 
-
     @property
     def get_money(self):
         # геттер який дозволяє отримати загальний залишок грошей у 'casino'

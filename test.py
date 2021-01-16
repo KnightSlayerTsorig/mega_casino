@@ -2,18 +2,6 @@ from user import User
 from super_admin import SuperAdmin
 
 
-# Створення екземпляру класу 'User'
-cat = User('Kit', 200)
-# Перевірка екземпляру класу 'User' на можливість грати в 'GameMachine'
-cat.play(25)
-# Перевірка екземпляру класу 'User' на можливість грати в 'GameMachine' якщо сумма наявних у нього коштів:
-# 1 - менша аніж та, яку він хоче покласти у 'GameMachine'
-cat.play(350)
-# 2 - являється відємним числом
-cat.play(-350)
-
-print('\n')
-
 # Створення екземпляру класу 'SuperAdmin'
 sobaka = SuperAdmin('Dog', 50000)
 # Створення власного 'casino' екземпляром класу 'SuperAdmin'
@@ -58,4 +46,17 @@ sobaka.game_machine_add_money(2000, 3)
 sobaka.remove_game_machine(0)
 # Спроба 'SuperAdmin' видалити 'GameMachine' з індексом 1(неіснуючу) з власного 'casino'
 sobaka.remove_game_machine(1)
+
+print('\n')
+
+# Створення екземпляру класу 'User'
+cat = User('Kit', 200)
+# Перевірка екземпляру класу 'User' на можливість грати у випадковому 'GameMachine'
+# в 'casino' створене екземпляром 'SuperAdmin'
+cat.play(25, sobaka.casino)
+# Перевірка екземпляру класу 'User' на можливість грати в 'GameMachine' якщо сумма наявних у нього коштів:
+# 1 - менша аніж та, яку він хоче покласти у 'GameMachine'
+cat.play(350, sobaka.casino)
+# 2 - являється відємним числом
+cat.play(-350, sobaka.casino)
 
