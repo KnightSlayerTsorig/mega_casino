@@ -1,5 +1,6 @@
 from user import User
 from casino import Casino
+import operator
 
 
 class SuperAdmin(User):
@@ -28,8 +29,30 @@ class SuperAdmin(User):
 
     def withdraw_money(self, money):
         # метод за допомогою якого 'SuperAdmin' може зняти гроші з рахунку 'casino'
-        self.money += self.casino.withdraw_money(money)
-        print('You have: ' + str(self.money) + '$ left.')
+        # а також відсортовує 'GameMachines' відповідно до наявної у них суми грошей
+        if money > self.casino.money:
+            print('There is not enough money in the casino')
+            return 0
+        elif money < 0:
+            print('''You can't withdraw negative amount of cash!''')
+            return 0
+        else:
+            amount_needed = 0
+            money_needed = money
+            while amount_needed != money:
+                money_needed = money_needed - amount_needed
+                self.casino.game_machines = \
+                    sorted(self.casino.game_machines, key=operator.attrgetter('money'), reverse=True)
+                amount_needed += self.casino.game_machines[0].take_money(money_needed)
+
+            self.casino.money -= money
+            self.money += money
+            print('You successfully withdraw: ' + str(money) + '$ from your casino')
+            print('Money left in Casino: ' + str(self.casino.money))
+            counter = 0
+            for item in self.casino.game_machines:
+                print('Money left in game machine № ' + str(counter) + ' : ' + str(item.money) + '$.')
+                counter += 1
 
     def casino_add_money(self, money):
         # метод за допомогою якого 'SuperAdmin' може додати гроші до рахунку 'casino'
@@ -38,26 +61,33 @@ class SuperAdmin(User):
         elif money < 0:
             print('''You can't put in the casino negative amount of money''')
         else:
-            self.casino.casino_add_money(money)
+            self.casino.money += money
             self.money -= money
+            print('You put: ' + str(money) + '$ in the casino.')
             print('You have: ' + str(self.money) + '$ left.')
 
     def game_machine_add_money(self, money, index):
         # метод за допомогою якого 'SuperAdmin' може додати гроші до 'GameMachine' у  'casino'
         if self.money < money:
             print('''You can't put in the GameMachine money that you didn't have''')
-        elif money < 0:
-            print('''You can't put in the GameMachine negative amount of money''')
         else:
-            check = self.casino.game_machine_add_money(money, index)
+            check = self.casino.game_machines[index].put_money(money)
             if check:
                 print('You successfully put in: ' + str(money) + '$ at the Game machine №' + str(index))
                 self.money -= money
+                self.casino.money += money
             print('You have: ' + str(self.money) + '$ left.')
 
     def remove_game_machine(self, index):
         # метод який дозвляє 'SuperAdmin' видаляти 'GameMachine' з Casino та рівномірно розприділяти гроші
-        # між 'GameMachine' які залишилися
-        self.casino.remove_game_machine(index)
-
-
+        # між 'GameMachine' які залишилися а також відсортовує 'GameMachines' відповідно до наявної у них суми грошей
+        if index > len(self.casino.game_machines) - 1 or index < 0:
+            print('''You can't remove the Game Machine that didn't exist!''')
+        else:
+            machine_money = self.casino.game_machines[index].money
+            self.casino.game_machines.pop(index)
+            print('Game Machine №' + str(index) + ' successfully removed from ' + self.name + '.')
+            machine_money = int(machine_money / len(self.casino.game_machines))
+            for el in self.casino.game_machines:
+                el.money += machine_money
+            sorted(self.casino.game_machines, key=operator.attrgetter('money'), reverse=True)

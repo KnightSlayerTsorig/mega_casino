@@ -14,12 +14,13 @@ class GameMachine:
 
     def take_money(self, amount):
         # метод, за допомогою якого 'SuperAdmin' може забрати гроші з 'GameMachine'
-        self.money = self.money - amount
-        if self.money > 0:
-            print(str(self.money) + ' left in the Game Machine')
-            return self.money
+        if self.money - amount > 0:
+            self.money = self.money - amount
+            return amount
         else:
-            print('There is not enough money at Game Machine! Please try withdraw lower amount of cash.')
+            amount = self.money
+            self.money = 0
+            return amount
 
     def put_money(self, amount):
         # метод, за допомогою якого 'SuperAdmin' може покласти гроші в 'GameMachine'

@@ -19,7 +19,6 @@ class User:
         else:
             self.money = self.money - money
             self.money += GameMachine(
-                casino.game_machines_money
-                [randint(0, len(casino.game_machines_money) - 1)]).play(money)
+                casino.game_machines[randint(0, len(casino.game_machines) - 1)].money).play(money)
 
 
