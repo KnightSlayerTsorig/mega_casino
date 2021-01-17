@@ -36,6 +36,9 @@ class SuperAdmin(User):
         elif money < 0:
             print('''You can't withdraw negative amount of cash!''')
             return 0
+        elif not self.casino.game_machines[0]:
+            self.casino.money -= money
+            self.money += money
         else:
             amount_needed = 0
             money_needed = money
