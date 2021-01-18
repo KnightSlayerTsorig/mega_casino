@@ -36,7 +36,7 @@ class SuperAdmin(User):
         elif money < 0:
             print('''You can't withdraw negative amount of cash!''')
             return 0
-        elif not self.casino.game_machines[0]:
+        elif not self.casino.game_machines:
             self.casino.money -= money
             self.money += money
         else:
@@ -83,14 +83,17 @@ class SuperAdmin(User):
 
     def remove_game_machine(self, index):
         # метод який дозвляє 'SuperAdmin' видаляти 'GameMachine' з Casino та рівномірно розприділяти гроші
-        # між 'GameMachine' які залишилися а також відсортовує 'GameMachines' відповідно до наявної у них суми грошей
+        # між тими 'GameMachine' які залишилися
         if index > len(self.casino.game_machines) - 1 or index < 0:
             print('''You can't remove the Game Machine that didn't exist!''')
         else:
             machine_money = self.casino.game_machines[index].money
             self.casino.game_machines.pop(index)
-            print('Game Machine №' + str(index) + ' successfully removed from ' + self.name + '.')
-            machine_money = int(machine_money / len(self.casino.game_machines))
-            for el in self.casino.game_machines:
-                el.money += machine_money
-            sorted(self.casino.game_machines, key=operator.attrgetter('money'), reverse=True)
+            if len(self.casino.game_machines) != 0:
+                print('Game Machine №' + str(index) + ' successfully removed from ' + self.name + '.')
+                machine_money = int(machine_money / len(self.casino.game_machines))
+                for el in self.casino.game_machines:
+                    el.money += machine_money
+            else:
+                print('You removed all Game Machines from your casino')
+                print('Money left in casino: ' + str(self.casino.money) + '$.')

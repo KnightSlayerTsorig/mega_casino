@@ -56,3 +56,6 @@ cat.play(350, sobaka.casino)
 # 2 - являється відємним числом
 cat.play(-350, sobaka.casino)
 sobaka.casino.get_money
+# Спроба 'User' зіграти у випадку якщо в 'casino' не залишилося 'GameMachines'
+sobaka.remove_game_machine(0)
+cat.play(25, sobaka.casino)

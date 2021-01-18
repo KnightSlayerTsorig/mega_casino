@@ -16,6 +16,8 @@ class User:
             print('You cannot bet more money than you have')
         elif money <= 0:
             print('You cannot bet a negative number')
+        elif not casino.game_machines:
+            print('Sorry there is no Game Machines at this casino')
         else:
             self.money = self.money - money
             self.money += GameMachine(
