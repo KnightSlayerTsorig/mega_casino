@@ -17,7 +17,7 @@ class User:
         elif money <= 0:
             print('You cannot bet a negative number')
         elif not casino.game_machines:
-            print('Sorry there is no Game Machines at this casino')
+            print('''Sorry there isn't any Game Machine at this casino''')
         else:
             self.money = self.money - money
             self.money += GameMachine(
