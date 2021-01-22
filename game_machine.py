@@ -35,7 +35,7 @@ class GameMachine:
         # метод який імітує поведінку слот машини
         if user_money < 0:
             print('''You can't put in negative amount of money!''')
-        elif user_money > self.money * 3:
+        elif user_money * 3 > self.money:
             print('''There is not enough money at Game Machine''')
         else:
             self.money = self.money + user_money
